@@ -48,7 +48,7 @@ INSTALLED_APPS = [
     # 'allauth',
     # 'allauth.account',
     # 'rest_auth.registration',
-    'oauth2_provider',
+    # 'oauth2_provider',
     'phonenumber_field',
     'scanapp',
 ]
