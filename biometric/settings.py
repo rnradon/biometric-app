@@ -48,18 +48,18 @@ INSTALLED_APPS = [
     # 'allauth',
     # 'allauth.account',
     # 'rest_auth.registration',
-    # 'oauth2_provider',
+    'oauth2_provider',
     'phonenumber_field',
     'scanapp',
 ]
 
 # SITE_ID = 1
 
-# REST_FRAMEWORK = { 
-#     'DEFAULT_AUTHENTICATION_CLASSES': (
-#         'oauth2_provider.ext.rest_framework.OAuth2Authentication', 
-#     ), 
-# } 
+REST_FRAMEWORK = { 
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'oauth2_provider.ext.rest_framework.OAuth2Authentication', 
+    ), 
+} 
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
