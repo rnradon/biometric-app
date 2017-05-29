@@ -35,6 +35,7 @@ class Bus(models.Model):
 
 class Student(models.Model):
 	bus = models.ForeignKey(Bus, on_delete=models.PROTECT) #on deleteing a bus, first delete the students manually else bus cant be deleted
+	# owner = models.ForeignKey('auth.User', related_name='students')
 	student_name = models.CharField(max_length=100)
 	parent_name = models.CharField(max_length= 100)
 	class_number = models.PositiveIntegerField(validators = [MinValueValidator(1), MaxValueValidator(12)])

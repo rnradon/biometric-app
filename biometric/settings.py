@@ -42,9 +42,24 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    # 'rest_auth',
+    # 'rest_framework.authtoken',
+    # 'django.contrib.sites',
+    # 'allauth',
+    # 'allauth.account',
+    # 'rest_auth.registration',
+    'oauth2_provider',
     'phonenumber_field',
     'scanapp',
 ]
+
+# SITE_ID = 1
+
+REST_FRAMEWORK = { 
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'oauth2_provider.ext.rest_framework.OAuth2Authentication', 
+    ), 
+} 
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -83,11 +98,14 @@ WSGI_APPLICATION = 'biometric.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'biometric_scan',
+        'NAME': 'biometric_app',
         'HOST': 'localhost',
         'USER': 'root',
         'PASSWORD':'123',
         'PORT':3306,
+    #     'OPTIONS': {
+    #     "init_command": "SET foreign_key_checks = 0;",
+    # },
     }
 }
 
@@ -146,3 +164,5 @@ STATICFILES_DIRS = [
 
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'

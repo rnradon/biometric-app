@@ -23,9 +23,13 @@ urlpatterns = [
     
     url(r'^$', views.index),    
     url(r'^admin/', admin.site.urls),
+    # url(r'^rest-auth/', include('rest_auth.urls')),
+    # url(r'^rest-auth/registration/', include('rest_auth.registration.urls')),
     # url(r'^api/', include('api.urls')),
     # url(r'^student/', views.ListCreateStudents.as_view()),
+    url(r'^o/', include('oauth2_provider.urls', namespace='oauth2_provider')),
     url(r'^scanapp/', include('scanapp.urls')),
+    url(r'^', include('django.contrib.auth.urls')),
 ]
 
 
