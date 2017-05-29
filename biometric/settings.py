@@ -27,7 +27,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = [
     #'6fecd92c.ngrok.io',
-    'biometric-scan.herokuapp.com',
+    'biometric-app.herokuapp.com',
     '127.0.0.1',
 ]
 
