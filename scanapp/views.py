@@ -11,9 +11,18 @@ from rest_framework.response import Response
 from rest_framework import status, generics
 from rest_framework.decorators import api_view
 
-from .models import Student, Bus
-from .serializers import StudentSerializer, BusSerializer
-# from .permissions import IsOwnerOrReadOnly
+from .models import Student, Bus, User
+from .serializers import StudentSerializer, BusSerializer#, RegistrationSerializer
+from .permissions import IsOwnerOrReadOnly#, IsAuthenticated
+
+
+from django.http import HttpResponse
+
+from twilio.rest import Client
+from django.conf import settings
+
+from sendsms.backends.base import BaseSmsBackend
+
 
 def index(request):
     return HttpResponse("<h1>YO! It's Pizza Time!!</h1>")
@@ -54,12 +63,13 @@ def index(request):
 # 	def pre_save(self, obj):
 # 		obj.owner = self.request.user
 
-
+#------------------------------------------------------------
 @api_view(['GET', 'POST'])
 def student_list(request):
     """
     List all queries of the table, or create a new query.
     """
+    #permission_classes = (IsAuthenticated,) -- ++++++++++++++TODO+++++++++++++++++++
     if request.method == 'GET':
         students = Student.objects.all()
         serializer = StudentSerializer(students, many=True)
@@ -74,8 +84,17 @@ def student_list(request):
             return Response(
                 serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+#------------------------------------------------------------
 
 
+# class StudentView(APIView):
+# 	permission_classes = (IsAuthenticated,)
+
+
+
+
+
+#------------------------------------------------------------
 @api_view(['GET', 'PUT', 'DELETE'])
 def student_detail(request, student_id, bus_pk):
     """
@@ -162,6 +181,29 @@ def bus_detail(request, bus_pk):
 		return Response(status=status.HTTP_204_NO_CONTENT)
 
 
+
+# class RegistrationView(APIView): 
+# 	permission_classes = () 
+# 	def post(self, request):
+# 		serializer = RegistrationSerializer(data=request.data) 
+
+# 		# Check format and unique constraint 
+# 		if not serializer.is_valid(): 
+# 			return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST) 
+# 		data = serializer.data 
+# 		u = User.objects.create(username=data['username']) 
+# 		u.set_password(data['password']) 
+# 		u.save() 
+
+# 		# Create OAuth2 client 
+# 		name = u.username 
+# 		client = Client(user=u, name=name, url='' + name, client_id=name, client_secret='', client_type=1) 
+# 		client.save() 
+# 		return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+
+#------------------------------------------------------------
+
 # @api_view(['GET', 'POST'])
 # def student_list(request):
 #     """
@@ -214,3 +256,84 @@ def bus_detail(request, bus_pk):
 #     	elif request.method == 'DELETE':
 #         	student.delete()
 #         	return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+
+
+
+
+
+
+
+# class StudentMixin(object):
+#     queryset = Student.objects.all()
+#     serializer_class = StudentSerializer
+#     permission_classes = (IsOwnerOrReadOnly,)
+
+#     def pre_save(self, obj):
+#         obj.owner = self.request.user
+
+
+# class StudentList(StudentMixin, ListCreateAPIView):
+#     pass
+
+
+# class StudentDetail(StudentMixin, RetrieveUpdateDestroyAPIView):
+#     pass
+
+
+
+
+
+
+
+
+
+
+
+# class CreateUserView(CreateAPIView):
+
+#     model = get_user_model()
+#     permission_classes = [
+#         permissions.AllowAny # Or anon users can't register
+#     ]
+#     serializer_class = UserSerializer
+
+
+
+
+
+
+
+def awesome_method(request):
+	message = 'YO'
+	from_ = '+17866296415'
+	to = '+919999688904';
+	client = Client(
+	    settings.TWILIO_ACCOUNT_SID, settings.TWILIO_AUTH_TOKEN)
+	response = client.messages.create(
+	    body=message, to=to, from_=from_)
+
+
+MSG91_AUTHKEY = '154618AwWLYscrj593050fe'
+MSG91_ROUTE = '4'
+
+class Msg91SmsBackend(BaseSmsBackend):
+
+    def send_messages(self, messages):
+        for message in messages:
+            for to in message.to:
+                values = {
+                          'authkey' : MSG91_AUTHKEY,
+                          'mobiles' : to,
+                          'message' : message.body,
+                          'sender' : message.from_phone,
+                          'route' : MSG91_ROUTE
+                          }
+                print(values)
+                url = "https://control.msg91.com/api/sendhttp.php" # API URL
+                postdata = urllib.urlencode(values) # URL encoding the data here.
+                req = urllib2.Request(url, postdata)
+                response = urllib2.urlopen(req)
+                output = response.read() # Get Response
+                print(response)

@@ -1,6 +1,7 @@
 from django.db import models
 from django.core.validators import MinValueValidator, MaxValueValidator
 from phonenumber_field.modelfields import PhoneNumberField
+from django.contrib.auth.models import Permission, User
 
 # Create your models here.
 
@@ -35,7 +36,10 @@ class Bus(models.Model):
 
 class Student(models.Model):
 	bus = models.ForeignKey(Bus, on_delete=models.PROTECT) #on deleteing a bus, first delete the students manually else bus cant be deleted
-	# owner = models.ForeignKey('auth.User', related_name='students')
+	# owner = models.ForeignKey('auth.User', related_name='students', null = True)
+	admission_number = models.PositiveIntegerField()
+	# username = models.PositiveIntegerField(blank=True, null = True)
+	# password = models.CharField(max_length=100)
 	student_name = models.CharField(max_length=100)
 	parent_name = models.CharField(max_length= 100)
 	class_number = models.PositiveIntegerField(validators = [MinValueValidator(1), MaxValueValidator(12)])
@@ -48,6 +52,9 @@ class Student(models.Model):
 	start_trip = models.DateTimeField(auto_now=True, auto_now_add=False)
 	end_trip = models.DateTimeField(auto_now=True, auto_now_add=False)
 	student_id = models.PositiveIntegerField(default=0)
+
+	# user = User.objects.create(username=admission_number, password = "pass1234")
+	# user.save()
 
 	def __str__(self):
 		return self.student_name
@@ -67,6 +74,21 @@ class Student(models.Model):
 		else:
 			Student.objects.filter(id=self.id).update(student_id=last_student_id.student_id+1)
 		return obj
+
+	# def save(self, *args, **kwargs):
+
+	# 	self.owner.username = '{0}'.format( self.admission_number)
+	# 	super(Student, self).save(*args, **kwargs)
+
+#     
+	def post_save(self, *args, **kwargs):
+		user = User(username = '{0}'.format( self.admission_number))
+		password = self.phone_number
+		user.set_password(password)
+		user.save()
+		return user
+
+
 
 
 

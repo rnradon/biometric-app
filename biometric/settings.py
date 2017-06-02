@@ -29,6 +29,7 @@ ALLOWED_HOSTS = [
     #'6fecd92c.ngrok.io',
     'biometric-app.herokuapp.com',
     '127.0.0.1',
+    # 'https://www.getpostman.com/oauth2/callback'
 ]
 
 
@@ -42,24 +43,52 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
-    # 'rest_auth',
-    # 'rest_framework.authtoken',
-    # 'django.contrib.sites',
-    # 'allauth',
-    # 'allauth.account',
-    # 'rest_auth.registration',
+    'rest_auth',
+    'rest_framework.authtoken',
+    'django.contrib.sites',
+    'allauth',
+    'allauth.account',
+    'rest_auth.registration',
     'oauth2_provider',
+    # 'django_twilio',
     'phonenumber_field',
     'scanapp',
 ]
 
-# SITE_ID = 1
+SITE_ID = 1
 
 REST_FRAMEWORK = { 
+    # 'DEFAULT_AUTHENTICATION_CLASSES': (
+    #     'oauth2_provider.ext.rest_framework.OAuth2Authentication', 
+    # ), 
     'DEFAULT_AUTHENTICATION_CLASSES': (
+        # 'rest_framework.authentication.OAuth2Authentication', 
         'oauth2_provider.ext.rest_framework.OAuth2Authentication', 
+        'rest_framework.authentication.SessionAuthentication'
     ), 
+
+    'DEFAULT_MODEL_SERIALIZER_CLASS': 
+        'rest_framework.serializers.ModelSerializer', 
+
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAdminUser',
+    )
 } 
+
+REST_AUTH_SERIALIZERS = {
+    # 'LOGIN_SERIALIZER': 'scanapp.serializers.LoginSerializer',
+}
+
+REST_AUTH_REGISTER_SERIALIZERS = {
+    'REGISTER_SERIALIZER': 'scanapp.serializers.RegisterSerializer',
+
+}
+
+ACCOUNT_AUTHENTICATION_METHOD = 'username',   
+ACCOUNT_EMAIL_REQUIRED = False,
+ACCOUNT_USERNAME_REQUIRED = True,
+ACCOUNT_USER_MODEL_EMAIL_FIELD = None
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -69,6 +98,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
 ]
 
 ROOT_URLCONF = 'biometric.urls'
@@ -129,6 +159,7 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
+
 # Internationalization
 # https://docs.djangoproject.com/en/dev/topics/i18n/
 
@@ -166,3 +197,13 @@ STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+# TWILIO_ACCOUNT_SID = 'AC17c5c823570dc4c8e5637d742dfd9e0d'
+# TWILIO_AUTH_TOKEN = 'e8b81c5f8c2378223b084d853efebbde'
+
+# SENDSMS_BACKEND = 'myapp.mysmsbackend.SmsBackend'
+
+
+
+# MSG91_AUTHKEY = '154618AwWLYscrj593050fe'
+# MSG91_ROUTE = '4'
