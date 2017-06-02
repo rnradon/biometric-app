@@ -37,9 +37,9 @@ urlpatterns = [
     url(r'^scanapp/', include('scanapp.urls')),
     url(r'^', include('django.contrib.auth.urls')),
     # url(r'^sms/$', include('djtwilio.views.sms')),
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+]
 
 
-# urlpatterns 
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 # urlpatterns = format_suffix_patterns(urlpatterns)

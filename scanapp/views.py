@@ -18,6 +18,13 @@ from .serializers import StudentSerializer, BusSerializer#, RegistrationSerializ
 
 from django.http import HttpResponse
 
+from django.views.decorators.csrf import csrf_exempt
+
+from django.utils.decorators import method_decorator
+
+from django.core.mail import send_mail
+from django.conf import settings
+
 # from twilio.rest import Client
 # from django.conf import settings
 
@@ -64,7 +71,10 @@ def index(request):
 # 		obj.owner = self.request.user
 
 #------------------------------------------------------------
+
+@method_decorator(csrf_exempt)
 @api_view(['GET', 'POST'])
+
 def student_list(request):
     """
     List all queries of the table, or create a new query.
@@ -95,12 +105,17 @@ def student_list(request):
 
 
 #------------------------------------------------------------
-@api_view(['GET', 'PUT', 'DELETE'])
+
+@method_decorator(csrf_exempt)
+@api_view(['GET', 'PUT', 'DELETE', 'POST'])
+
 def student_detail(request, student_id, bus_pk):
     """
     Get, udpate, or delete a specific query from the table
     """
     # return HttpResponse("WORKING")
+
+
     try:
     	# bus_fk = Bus.objects.get(bus_pk)
     	student = Student.objects.filter(bus=bus_pk, student_id=student_id)
@@ -124,6 +139,17 @@ def student_detail(request, student_id, bus_pk):
             return Response(
                 serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+
+    elif request.method == 'POST':
+    	serializer = StudentSerializer(data=request.data)
+    	if serializer.is_valid():
+    		serializer.save()
+    		return Response(serializer.data, status=status.HTTP_201_CREATED)
+    	else:
+            return Response(
+                serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
     elif request.method == 'DELETE':
         student.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
@@ -131,8 +157,9 @@ def student_detail(request, student_id, bus_pk):
 
 
 
-
+@method_decorator(csrf_exempt)
 @api_view(['GET', 'POST'])
+
 def bus_list(request):
     """
     List all queries of the table, or create a new query.
@@ -151,7 +178,10 @@ def bus_list(request):
             return Response(
                 serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-@api_view(['GET', 'PUT', 'DELETE'])
+
+@method_decorator(csrf_exempt)
+@api_view(['GET', 'PUT', 'DELETE', 'POST'])
+
 def bus_detail(request, bus_pk):
 
 	"""
@@ -176,9 +206,42 @@ def bus_detail(request, bus_pk):
 			return Response(
 				serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+	elif request.method == 'POST':
+		serializer = BusSerializer(data=request.data)
+		if serializer.is_valid():
+			serializer.save()
+			return Response(serializer.data, status=status.HTTP_201_CREATED)
+		else:
+			return Response(
+                serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 	elif request.method == 'DELETE':
 		bus.delete()
 		return Response(status=status.HTTP_204_NO_CONTENT)
+
+@api_view(['GET'])
+def email(request):
+	if request.method == 'GET':
+		subject = 'Test Sub'
+		from_email = settings.EMAIL_HOST_USER
+		to_email = [from_email, 'rishabhnarangcool@gmail.com']
+		contact_message = """
+		YO BRO
+		"""
+
+		send_mail(subject, 
+			contact_message,
+			from_email,
+			to_email,
+			fail_silently = False
+			)
+
+
+
+
+
+
+
 
 
 

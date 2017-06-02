@@ -37,7 +37,7 @@ class Bus(models.Model):
 class Student(models.Model):
 	bus = models.ForeignKey(Bus, on_delete=models.PROTECT) #on deleteing a bus, first delete the students manually else bus cant be deleted
 	# owner = models.ForeignKey('auth.User', related_name='students', null = True)
-	admission_number = models.PositiveIntegerField()
+	admission_number = models.PositiveIntegerField(unique=True)
 	# username = models.PositiveIntegerField(blank=True, null = True)
 	# password = models.CharField(max_length=100)
 	student_name = models.CharField(max_length=100)
@@ -47,10 +47,10 @@ class Student(models.Model):
 	student_photo =  models.FileField()
 	phone_number = PhoneNumberField()
 	student_bus_stop = models.CharField(max_length=200)
-	latitude = models.DecimalField(max_digits=10, decimal_places=8)
-	longitude = models.DecimalField(max_digits=11, decimal_places=8)
-	start_trip = models.DateTimeField(auto_now=True, auto_now_add=False)
-	end_trip = models.DateTimeField(auto_now=True, auto_now_add=False)
+	latitude = models.DecimalField(max_digits=10, decimal_places=8, null = True)
+	longitude = models.DecimalField(max_digits=11, decimal_places=8, null = True)
+	start_trip = models.DateTimeField(auto_now=True, auto_now_add=False, null = True)
+	end_trip = models.DateTimeField(auto_now=True, auto_now_add=False, null = True)
 	student_id = models.PositiveIntegerField(default=0)
 
 	# user = User.objects.create(username=admission_number, password = "pass1234")
