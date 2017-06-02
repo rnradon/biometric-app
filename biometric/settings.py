@@ -23,7 +23,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '$%nc2#k515u*-9+77beo*#_x2b-@=6x$m)(54@b9x^ot61^sh^'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = [
     #'6fecd92c.ngrok.io',
@@ -74,7 +74,7 @@ REST_FRAMEWORK = {
     #     'rest_framework.permissions.IsAdminUser',
     # )
 
-    
+
 } 
 
 REST_AUTH_SERIALIZERS = {
