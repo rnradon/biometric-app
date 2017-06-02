@@ -219,9 +219,16 @@ def bus_detail(request, bus_pk):
 		bus.delete()
 		return Response(status=status.HTTP_204_NO_CONTENT)
 
-@api_view(['GET'])
-def email(request):
-	if request.method == 'GET':
+@api_view(['POST'])
+def email(request, admission_number):
+
+
+	try:
+    	# bus_fk = Bus.objects.get(bus_pk)
+    	student = Student.objects.filter(admission_number=admission_number)
+
+
+	if request.method == 'POST':
 		subject = 'Test Sub'
 		from_email = settings.EMAIL_HOST_USER
 		to_email = [from_email, 'rishabhnarangcool@gmail.com']
@@ -235,6 +242,7 @@ def email(request):
 			to_email,
 			fail_silently = False
 			)
+		return Response(status=status.HTTP_201_CREATED)
 
 
 

@@ -44,7 +44,7 @@ class Student(models.Model):
 	parent_name = models.CharField(max_length= 100)
 	class_number = models.PositiveIntegerField(validators = [MinValueValidator(1), MaxValueValidator(12)])
 	section = models.CharField(max_length = 1)
-	student_photo =  models.FileField()
+	# student_photo =  models.FileField()
 	phone_number = PhoneNumberField()
 	student_bus_stop = models.CharField(max_length=200)
 	latitude = models.DecimalField(max_digits=10, decimal_places=8, null = True)
