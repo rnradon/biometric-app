@@ -13,5 +13,5 @@ urlpatterns = [
     url(r'^bus/(?P<bus_pk>[0-9]+)$', views.bus_detail, name='bus_detail'),
     # url(r'^sign_up/$', views.RegistrationView.as_view(), name="sign_up"),
     # url(r'^register/$', views.RegistrationView.as_view(), name='register'),
-    url(r'^sms/$', views.Msg91SmsBackend, name = 'awesome_method'),
+    # url(r'^sms/$', views.Msg91SmsBackend, name = 'awesome_method'),
 ]

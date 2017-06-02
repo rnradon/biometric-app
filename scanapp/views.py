@@ -18,10 +18,10 @@ from .permissions import IsOwnerOrReadOnly#, IsAuthenticated
 
 from django.http import HttpResponse
 
-from twilio.rest import Client
-from django.conf import settings
+# from twilio.rest import Client
+# from django.conf import settings
 
-from sendsms.backends.base import BaseSmsBackend
+# from sendsms.backends.base import BaseSmsBackend
 
 
 def index(request):
@@ -305,35 +305,35 @@ def bus_detail(request, bus_pk):
 
 
 
-def awesome_method(request):
-	message = 'YO'
-	from_ = '+17866296415'
-	to = '+919999688904';
-	client = Client(
-	    settings.TWILIO_ACCOUNT_SID, settings.TWILIO_AUTH_TOKEN)
-	response = client.messages.create(
-	    body=message, to=to, from_=from_)
+# def awesome_method(request):
+# 	message = 'YO'
+# 	from_ = '+17866296415'
+# 	to = '+919999688904';
+# 	client = Client(
+# 	    settings.TWILIO_ACCOUNT_SID, settings.TWILIO_AUTH_TOKEN)
+# 	response = client.messages.create(
+# 	    body=message, to=to, from_=from_)
 
 
-MSG91_AUTHKEY = '154618AwWLYscrj593050fe'
-MSG91_ROUTE = '4'
+# MSG91_AUTHKEY = '154618AwWLYscrj593050fe'
+# MSG91_ROUTE = '4'
 
-class Msg91SmsBackend(BaseSmsBackend):
+# class Msg91SmsBackend(BaseSmsBackend):
 
-    def send_messages(self, messages):
-        for message in messages:
-            for to in message.to:
-                values = {
-                          'authkey' : MSG91_AUTHKEY,
-                          'mobiles' : to,
-                          'message' : message.body,
-                          'sender' : message.from_phone,
-                          'route' : MSG91_ROUTE
-                          }
-                print(values)
-                url = "https://control.msg91.com/api/sendhttp.php" # API URL
-                postdata = urllib.urlencode(values) # URL encoding the data here.
-                req = urllib2.Request(url, postdata)
-                response = urllib2.urlopen(req)
-                output = response.read() # Get Response
-                print(response)
+#     def send_messages(self, messages):
+#         for message in messages:
+#             for to in message.to:
+#                 values = {
+#                           'authkey' : MSG91_AUTHKEY,
+#                           'mobiles' : to,
+#                           'message' : message.body,
+#                           'sender' : message.from_phone,
+#                           'route' : MSG91_ROUTE
+#                           }
+#                 print(values)
+#                 url = "https://control.msg91.com/api/sendhttp.php" # API URL
+#                 postdata = urllib.urlencode(values) # URL encoding the data here.
+#                 req = urllib2.Request(url, postdata)
+#                 response = urllib2.urlopen(req)
+#                 output = response.read() # Get Response
+#                 print(response)
