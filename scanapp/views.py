@@ -220,12 +220,12 @@ def bus_detail(request, bus_pk):
 		return Response(status=status.HTTP_204_NO_CONTENT)
 
 @api_view(['POST'])
-def email(request, admission_number):
+def email(request):
 
 
-	try:
-    	# bus_fk = Bus.objects.get(bus_pk)
-    	student = Student.objects.filter(admission_number=admission_number)
+	# try:
+ #    	# bus_fk = Bus.objects.get(bus_pk)
+ #    	student = Student.objects.filter(admission_number=admission_number)
 
 
 	if request.method == 'POST':
