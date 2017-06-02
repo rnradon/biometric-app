@@ -51,7 +51,7 @@ class Student(models.Model):
 	longitude = models.DecimalField(max_digits=11, decimal_places=8, null = True)
 	start_trip = models.DateTimeField(auto_now=True, auto_now_add=False, null = True)
 	end_trip = models.DateTimeField(auto_now=True, auto_now_add=False, null = True)
-	student_id = models.PositiveIntegerField(default=0)
+	student_id = models.PositiveIntegerField(default=0, editable = False)
 
 	# user = User.objects.create(username=admission_number, password = "pass1234")
 	# user.save()
@@ -65,7 +65,7 @@ class Student(models.Model):
 	# 	super(Student, self).save(force_insert, force_update) # Call the "real" save() method.
 
 
-	def save(self, *args, **kwargs):
+	def pre_save(self, *args, **kwargs):
 		obj = super(Student, self).save(*args, **kwargs)
 		try:
 			last_student_id = self.bus.student_set.all().order_by('-student_id')[0]
@@ -74,6 +74,11 @@ class Student(models.Model):
 		else:
 			Student.objects.filter(id=self.id).update(student_id=last_student_id.student_id+1)
 		return obj
+
+
+	def get_readonly_fields(self, request, obj=None):
+		return ['student_id ']
+    	# return []
 
 	# def save(self, *args, **kwargs):
 

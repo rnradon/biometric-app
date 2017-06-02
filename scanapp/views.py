@@ -117,9 +117,10 @@ def student_detail(request, student_id, bus_pk):
 
 
     try:
-    	# bus_fk = Bus.objects.get(bus_pk)
-    	student = Student.objects.filter(bus=bus_pk, student_id=student_id)
-    	# student = student_in_bus.objects.get(pk=pk)
+    	# student_in_bus = Bus.objects.filter(id=bus_pk)
+    	student = Student.objects.filter(bus=bus_pk)
+    	student = student.get(student_id=student_id)
+    	# student = student_in_bus.objects.get(student_id=student_id)
 
     	# student = Student.objects.get(pk=pk)
 
@@ -127,8 +128,9 @@ def student_detail(request, student_id, bus_pk):
         return Response(status=status.HTTP_404_NOT_FOUND)
 
     if request.method == 'GET':
-        serializer = StudentSerializer(student,many=True)
-        return Response(serializer.data)
+    	student = Student.objects.filter(bus=bus_pk, student_id=student_id)
+    	serializer = StudentSerializer(student,many=True)
+    	return Response(serializer.data)
 
     elif request.method == 'PUT':
         serializer = StudentSerializer(student, data=request.data)
@@ -189,7 +191,7 @@ def bus_detail(request, bus_pk):
     """
 
 	try:
-		bus = Bus.objects.filter(pk=bus_pk)
+		bus = Bus.objects.filter(id=bus_pk)
 	except Bus.DoesNotExist:
 		return Response(status=status.HTTP_404_NOT_FOUND)
 
