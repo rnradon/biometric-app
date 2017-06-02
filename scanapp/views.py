@@ -13,7 +13,7 @@ from rest_framework.decorators import api_view
 
 from .models import Student, Bus, User
 from .serializers import StudentSerializer, BusSerializer#, RegistrationSerializer
-from .permissions import IsOwnerOrReadOnly#, IsAuthenticated
+# from .permissions import IsOwnerOrReadOnly#, IsAuthenticated
 
 
 from django.http import HttpResponse

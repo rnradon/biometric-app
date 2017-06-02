@@ -85,8 +85,6 @@ from django.http import HttpResponseRedirect
 
 class StudentSerializer(serializers.ModelSerializer):
 
-	# owner = serializers.CharField(source='owner.username')
-
 	class Meta:
 		model = Student
 		fields = '__all__'
@@ -262,8 +260,8 @@ class RegisterSerializer(serializers.Serializer):
 		return user
 
 
-	def redirect(self):
-		return HttpResponseRedirect("/admin")
+	# def redirect(self):
+	# 	return HttpResponseRedirect("/admin")
 
 
 
