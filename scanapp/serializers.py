@@ -225,7 +225,7 @@ class RegisterSerializer(serializers.Serializer):
     )
 
 	password1 = serializers.CharField(write_only=True)
-	password2 = serializers.CharField(write_only=True)
+	# password2 = serializers.CharField(write_only=True)
 	# email = serializers.EmailField(required=False)
 
 	def validate_username(self, username):
@@ -236,8 +236,8 @@ class RegisterSerializer(serializers.Serializer):
 		return get_adapter().clean_password(password)
 
 	def validate(self, data):
-		if data['password1'] != data['password2']:
-			raise serializers.ValidationError(_("The two password fields din't match."))
+		# if data['password1'] != data['password2']:
+		# 	raise serializers.ValidationError(_("The two password fields din't match."))
 		return data
 
 	def custom_signup(self, request, user):

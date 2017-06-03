@@ -12,7 +12,7 @@ from rest_framework import status, generics
 from rest_framework.decorators import api_view
 
 from .models import Student, Bus, User
-from .serializers import StudentSerializer, BusSerializer, EmailSerializer#, RegistrationSerializer
+from .serializers import StudentSerializer, BusSerializer, EmailSerializer, RegisterSerializer
 # from .permissions import IsOwnerOrReadOnly#, IsAuthenticated
 
 
@@ -24,6 +24,11 @@ from django.utils.decorators import method_decorator
 
 from django.core.mail import send_mail
 from django.conf import settings
+
+from django.shortcuts import render
+from .forms import RegisterForm
+
+# import json
 
 # from twilio.rest import Client
 # from django.conf import settings
@@ -276,7 +281,7 @@ def bus_detail(request, bus_pk):
 		return Response(status=status.HTTP_204_NO_CONTENT)
 
 @api_view(['POST'])
-def email(request, admission_number):
+def email(request, admission_number, message):
 
 
 	try:
@@ -287,16 +292,33 @@ def email(request, admission_number):
 
 
 	if request.method == 'POST':
-		serializer = EmailSerializer(student,many=True)
-    	# return Response(serializer.data)
+		# print(student[0].admission_number)
+		# serializer = EmailSerializer(data=request.data)
+		# if serializer.is_valid():
+			# print("+++++++++++++++++++++++++")
+			# # print(serializer)
+			# check=request.POST
+			# print(check.get('student_name'))
+			# # print(request.POST.getlist('admission_number'))
+			# print("+++++++++++++++++++++++++")
+			# for i in serializer.data:
+			# 	for j in i:
+			# 		print(j)
+			# return Response(serializer.data)
 
+			# myDict = dict(serializer.iterlists())
+			# print(serializer.dict())
 
-		subject = serializer.data.admission_number
+			# print(dict(request.POST))
+
+			# print(json.dumps(serializer))
+
+		message = retrieve_message(message)
+    	
+		subject = "Student Admission Number " + str(student[0].admission_number) + " " + student[0].student_name + " Suggestion"
 		from_email = settings.EMAIL_HOST_USER
 		to_email = [from_email, 'rishabhnarangcool@gmail.com']
-		contact_message = """
-		YO BRO
-		"""
+		contact_message = message
 
 		send_mail(subject, 
 			contact_message,
@@ -306,6 +328,17 @@ def email(request, admission_number):
 			)
 		return Response(status=status.HTTP_201_CREATED)
 
+	else:
+			return Response(
+                serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+
+def retrieve_message(message):
+	message = message.replace("-n", "\n")
+	message = message.replace("-", " ")
+
+	return message
 
 
 
@@ -313,12 +346,43 @@ def email(request, admission_number):
 
 
 
+
+# @method_decorator(csrf_exempt)
+# def reg(request):
+# 	return render(request, 'scanapp/reg.html')
+
+
+@method_decorator(csrf_exempt)
+def register_student(request):
+    form = RegisterForm(request.POST or None)
+    if form.is_valid():
+        reg = form.save()
+        # album.save()
+        return render(request, 'scanapp/register_student.html')
+    context = {
+        "form": form,
+    }
+    return render(request, 'scanapp/register_student.html', context)
+
+
+
+@method_decorator(csrf_exempt)
+def register_bus(request):
+    form = RegisterForm(request.POST or None)
+    if form.is_valid():
+        reg = form.save()
+        # album.save()
+        return render(request, 'scanapp/register_bus.html')
+    context = {
+        "form": form,
+    }
+    return render(request, 'scanapp/register_bus.html', context)
 
 
 # class RegistrationView(APIView): 
 # 	permission_classes = () 
 # 	def post(self, request):
-# 		serializer = RegistrationSerializer(data=request.data) 
+# 		serializer = RegisterSerializer(data=request.data) 
 
 # 		# Check format and unique constraint 
 # 		if not serializer.is_valid(): 
@@ -333,6 +397,13 @@ def email(request, admission_number):
 # 		client = Client(user=u, name=name, url='' + name, client_id=name, client_secret='', client_type=1) 
 # 		client.save() 
 # 		return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+
+# class RegistrationView(APIView):
+# 	def get post(self, request):
+# 		serializer = RegisterSerializer(data=request.data)
+
+
 
 
 #------------------------------------------------------------
