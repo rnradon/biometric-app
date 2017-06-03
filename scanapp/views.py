@@ -12,7 +12,7 @@ from rest_framework import status, generics
 from rest_framework.decorators import api_view
 
 from .models import Student, Bus, User
-from .serializers import StudentSerializer, BusSerializer#, RegistrationSerializer
+from .serializers import StudentSerializer, BusSerializer, EmailSerializer#, RegistrationSerializer
 # from .permissions import IsOwnerOrReadOnly#, IsAuthenticated
 
 
@@ -158,6 +158,60 @@ def student_detail(request, student_biometric_id, bus_pk):
 
 
 
+@method_decorator(csrf_exempt)
+@api_view(['GET', 'PUT', 'DELETE', 'POST'])
+
+def parent_view(request, admission_number):
+    """
+    Get, udpate, or delete a specific query from the table
+    """
+    # return HttpResponse("WORKING")
+
+
+    try:
+    	# student_in_bus = Bus.objects.filter(id=bus_pk)
+    	# student = Student.objects.filter(bus=bus_pk)
+    	# student = Student.get(admission_number=admission_number)
+    	# student = student_in_bus.objects.get(student_id=student_id)
+    	student = Student.objects.filter(admission_number=admission_number)
+   
+    	# student = Student.objects.get(pk=pk)
+
+    except Student.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+
+    if request.method == 'GET':
+    	# student = Student.objects.filter(admission_number=admission_number)
+    	serializer = StudentSerializer(student,many=True)
+    	return Response(serializer.data)
+
+    elif request.method == 'PUT':
+    	student = Student.objects.get(admission_number=admission_number)
+    	serializer = StudentSerializer(student, data=request.data)
+    	if serializer.is_valid():
+    		serializer.save()
+    		return Response(serializer.data)
+    	else:
+    		return Response(
+                serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+    elif request.method == 'POST':
+    	serializer = StudentSerializer(data=request.data)
+    	if serializer.is_valid():
+    		serializer.save()
+    		return Response(serializer.data, status=status.HTTP_201_CREATED)
+    	else:
+            return Response(
+                serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+    elif request.method == 'DELETE':
+        student.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+
 
 @method_decorator(csrf_exempt)
 @api_view(['GET', 'POST'])
@@ -222,16 +276,22 @@ def bus_detail(request, bus_pk):
 		return Response(status=status.HTTP_204_NO_CONTENT)
 
 @api_view(['POST'])
-def email(request):
+def email(request, admission_number):
 
 
-	# try:
- #    	# bus_fk = Bus.objects.get(bus_pk)
- #    	student = Student.objects.filter(admission_number=admission_number)
+	try:
+		student = Student.objects.filter(admission_number=admission_number)
+
+	except Student.DoesNotExist:
+		return Response(status=status.HTTP_404_NOT_FOUND)
 
 
 	if request.method == 'POST':
-		subject = 'Test Sub'
+		serializer = EmailSerializer(student,many=True)
+    	# return Response(serializer.data)
+
+
+		subject = serializer.data.admission_number
 		from_email = settings.EMAIL_HOST_USER
 		to_email = [from_email, 'rishabhnarangcool@gmail.com']
 		contact_message = """

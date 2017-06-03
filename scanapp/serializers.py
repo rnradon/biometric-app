@@ -284,3 +284,9 @@ class RegisterSerializer(serializers.Serializer):
 #     class Meta:
 #         model = UserModel
 #         fields = '__all__'
+
+
+class EmailSerializer(serializers.Serializer):
+	class Meta:
+		model = Student
+		fields = ('student_name', 'admission_number', 'parent_name', 'bus')

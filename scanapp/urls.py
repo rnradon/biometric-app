@@ -11,7 +11,9 @@ urlpatterns = [
     url(r'^bus/(?P<bus_pk>[0-9]+)/student/(?P<student_biometric_id>[0-9]+)$', views.student_detail, name='student_detail'),
     url(r'^bus_all/$', views.bus_list, name='bus_list'),
     url(r'^bus/(?P<bus_pk>[0-9]+)$', views.bus_detail, name='bus_detail'),
-    url(r'^email/(?P<admission_number>[0-9]+)$', views.email, name='email')
+    url(r'^parent/(?P<admission_number>[0-9]+)$', views.parent_view, name='parent_view'),
+    url(r'^email/(?P<admission_number>[0-9]+)$', views.email, name='email'),
+
     # url(r'^sign_up/$', views.RegistrationView.as_view(), name="sign_up"),
     # url(r'^register/$', views.RegistrationView.as_view(), name='register'),
     # url(r'^sms/$', views.Msg91SmsBackend, name = 'awesome_method'),
