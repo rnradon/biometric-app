@@ -49,8 +49,8 @@ class Student(models.Model):
 	student_bus_stop = models.CharField(max_length=200)
 	latitude = models.DecimalField(max_digits=10, decimal_places=8, null = True)
 	longitude = models.DecimalField(max_digits=11, decimal_places=8, null = True)
-	start_trip = models.DateTimeField(auto_now=True, auto_now_add=False, null = True)
-	end_trip = models.DateTimeField(auto_now=True, auto_now_add=False, null = True)
+	start_trip = models.DateTimeField(auto_now_add=False, null = True)
+	end_trip = models.DateTimeField(auto_now_add=False, null = True)
 	student_biometric_id = models.PositiveIntegerField(validators = [MinValueValidator(1), MaxValueValidator(255)])
 
 	# user = User.objects.create(username=admission_number, password = "pass1234")
