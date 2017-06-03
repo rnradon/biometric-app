@@ -9,6 +9,7 @@
     <link href='https://fonts.googleapis.com/css?family=Satisfy' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" type="text/css" href="{% static 'scanapp/base.css' %}"/>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+    <script src="http://malsup.github.com/jquery.form.js"></script> 
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 
     <script src="{% static 'scanapp/js/plugin.js' %}"></script>
@@ -18,8 +19,17 @@
 <div class="row">
 <div class="col-md-3"></div>
 <div class="col-md-4"></div>
-<div class="col-md-4" id = "back" style="color: white;font-size: 13px;background-color: darkslategrey;border-radius: 5px; display: none;">
+<div class="col-md-4" id = "success" style="color: white;font-size: 13px;background-color: darkslategrey;border-radius: 5px; display: none;">
   Credentials Submitted Successfully. Press the back button for more entries!
+</div> 
+</div>
+</div>
+<div class="container-flud"> 
+<div class="row">
+<div class="col-md-3"></div>
+<div class="col-md-4"></div>
+<div class="col-md-4" id = "error" style="color: white;font-size: 13px;background-color: darkslategrey;border-radius: 5px; display: none;">
+  User Already Exists / Enter the Correct Details !
 </div> 
 </div>
 </div>
@@ -27,10 +37,10 @@
 
 <iframe width="0" height="0" border="0" name="dummyframe" id="dummyframe" style="display: none;"></iframe>
   <div id="contact" >
-    <h3>Driver Account</h3>
+    <h3>Bus Account</h3>
     <h4>Enter the aforementioned details</h4>
     <a href="/admin"><button name="submit" type="submit" id="contact-submit" style="background-color: #4c96af; margin-bottom: 3%">Back</button></a>
-    <form action="/rest-auth/registration/" method="post" target="dummyframe">
+    <form id = "myForm" action="/rest-auth/registration/" method="post" target="dummyframe">
     <fieldset>
       <input placeholder="Bus Number" type="number" tabindex="1" required autofocus name="username" style="width: 100%;">
     </fieldset>
@@ -44,9 +54,22 @@
       <button name="submit" type="submit" id="contact-submit" data-submit="...Sending" onclick="showBack();">Submit</button>
       <script>
       function showBack() {
-        document.getElementById("back").style.display = "block";
-        $('#back').delay(4000).fadeOut(300);
+        
       }
+
+      $('#myForm')
+      .ajaxForm({
+        url : '/rest-auth/registration/', // or whatever
+        dataType : 'json',
+        success : function (response) {
+            document.getElementById("success").style.display = "block";
+            $('#success').delay(4000).fadeOut(300);
+        },
+        error: function (response) {
+            document.getElementById("error").style.display = "block";
+            $('#error').delay(4000).fadeOut(300);
+        },
+    });
       </script>
     </fieldset>
     
