@@ -109,7 +109,7 @@ def student_list(request):
 @method_decorator(csrf_exempt)
 @api_view(['GET', 'PUT', 'DELETE', 'POST'])
 
-def student_detail(request, student_id, bus_pk):
+def student_detail(request, student_biometric_id, bus_pk):
     """
     Get, udpate, or delete a specific query from the table
     """
@@ -119,7 +119,7 @@ def student_detail(request, student_id, bus_pk):
     try:
     	# student_in_bus = Bus.objects.filter(id=bus_pk)
     	student = Student.objects.filter(bus=bus_pk)
-    	student = student.get(student_id=student_id)
+    	student = student.get(student_biometric_id=student_biometric_id)
     	# student = student_in_bus.objects.get(student_id=student_id)
 
     	# student = Student.objects.get(pk=pk)
@@ -128,7 +128,7 @@ def student_detail(request, student_id, bus_pk):
         return Response(status=status.HTTP_404_NOT_FOUND)
 
     if request.method == 'GET':
-    	student = Student.objects.filter(bus=bus_pk, student_id=student_id)
+    	student = Student.objects.filter(bus=bus_pk, student_biometric_id=student_biometric_id)
     	serializer = StudentSerializer(student,many=True)
     	return Response(serializer.data)
 
