@@ -30,6 +30,9 @@ class Bus(models.Model):
 	bus_number = models.CharField(max_length=100)
 	teacher_incharge = models.CharField(max_length=100)
 
+	class Meta:
+		verbose_name_plural = "buses"
+
 	def __str__(self):
 		return self.bus_number
 
