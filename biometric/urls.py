@@ -29,17 +29,10 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^rest-auth/', include('rest_auth.urls')),
     url(r'^rest-auth/registration/', include('rest_auth.registration.urls')),
-    # url(r'^api/', include('api.urls')),
-    # url(r'^student/', views.ListCreateStudents.as_view()),
-    # url(r'^o/', include('oauth2_provider.urls', namespace='oauth2_provider')),
-    # url(r'^oauth2/', include('oauth2_provider.urls', namespace='oauth2')),
     url(r'^api-auth/', include('rest_framework.urls',namespace='rest_framework')),
     url(r'^scanapp/', include('scanapp.urls')),
     url(r'^', include('django.contrib.auth.urls')),
-    # url(r'^sms/$', include('djtwilio.views.sms')),
 ]
 
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-
-# urlpatterns = format_suffix_patterns(urlpatterns)

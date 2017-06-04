@@ -26,10 +26,8 @@ SECRET_KEY = '$%nc2#k515u*-9+77beo*#_x2b-@=6x$m)(54@b9x^ot61^sh^'
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    #'6fecd92c.ngrok.io',
     'biometric-app.herokuapp.com',
     '127.0.0.1',
-    # 'https://www.getpostman.com/oauth2/callback'
 ]
 
 
@@ -49,8 +47,6 @@ INSTALLED_APPS = [
     'allauth',
     'allauth.account',
     'rest_auth.registration',
-    # 'oauth2_provider',
-    # 'django_twilio',
     'phonenumber_field',
     'scanapp',
 ]
@@ -58,12 +54,8 @@ INSTALLED_APPS = [
 SITE_ID = 1
 
 REST_FRAMEWORK = { 
-    # 'DEFAULT_AUTHENTICATION_CLASSES': (
-    #     'oauth2_provider.ext.rest_framework.OAuth2Authentication', 
-    # ), 
+   
     'DEFAULT_AUTHENTICATION_CLASSES': (
-        # 'rest_framework.authentication.OAuth2Authentication', 
-        # 'oauth2_provider.ext.rest_framework.OAuth2Authentication',
         'rest_framework.authentication.BasicAuthentication', 
         # 'rest_framework.authentication.SessionAuthentication',
         
@@ -81,6 +73,7 @@ REST_FRAMEWORK = {
 
 REST_AUTH_SERIALIZERS = {
     # 'LOGIN_SERIALIZER': 'scanapp.serializers.LoginSerializer',
+    # 'PASSWORD_RESET_SERIALIZER': 'scanapp.serializers.PasswordSerializer',
 }
 
 REST_AUTH_REGISTER_SERIALIZERS = {
@@ -104,6 +97,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
 
 ]
 
@@ -139,9 +133,6 @@ DATABASES = {
         'USER': 'root',
         'PASSWORD':'123',
         'PORT':3306,
-    #     'OPTIONS': {
-    #     "init_command": "SET foreign_key_checks = 0;",
-    # },
     }
 }
 
@@ -184,7 +175,6 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/dev/howto/static-files/
 
 
-# PHONENUMBER_DB_FORMAT = 'INTERNATIONAL'
 PHONENUMBER_DEFAULT_REGION = 'IN'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
@@ -202,12 +192,12 @@ STATICFILES_DIRS = [
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
 
-# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-# EMAIL_HOST = "smtp.gmail.com"
-# EMAIL_HOST_USER = "rnradon17@gmail.com"
-# EMAIL_HOST_PASSWORD = "gnkbphqrqhilxctl"
-# EMAIL_PORT = 587
-# EMAIL_USE_TLS = True
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_HOST = "smtp.gmail.com"
+EMAIL_HOST_USER = "rnradon17@gmail.com"
+EMAIL_HOST_PASSWORD = "gnkbphqrqhilxctl"
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
 
 # TWILIO_ACCOUNT_SID = 'AC17c5c823570dc4c8e5637d742dfd9e0d'
 # TWILIO_AUTH_TOKEN = 'e8b81c5f8c2378223b084d853efebbde'
