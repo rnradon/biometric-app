@@ -355,7 +355,7 @@ def reset_password(request, username):
 
 
 
-		subject = "Student Admission Number " + str(student[0].admission_number) + " " + student[0].student_name + " Password Change!"
+		subject = "Password Change Request - Student Admission Number " + str(student[0].admission_number) + " " + student[0].student_name
 		from_email = settings.EMAIL_HOST_USER
 		to_email = [student[0].email_id]
 		contact_message = message
