@@ -28,10 +28,13 @@ urlpatterns = [
     url(r'^$', views.index),    
     url(r'^admin/', admin.site.urls),
     url(r'^rest-auth/', include('rest_auth.urls')),
+    # url(r'^rest-auth/password/change/my', views.PasswordChangeView.as_view()),
     url(r'^rest-auth/registration/', include('rest_auth.registration.urls')),
     url(r'^api-auth/', include('rest_framework.urls',namespace='rest_framework')),
+    url(r'^reset-pass/(?P<username>[0-9]+)', views.reset_password),
     url(r'^scanapp/', include('scanapp.urls')),
     url(r'^', include('django.contrib.auth.urls')),
+
 ]
 
 

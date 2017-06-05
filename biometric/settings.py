@@ -23,7 +23,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '$%nc2#k515u*-9+77beo*#_x2b-@=6x$m)(54@b9x^ot61^sh^'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = [
     'biometric-app.herokuapp.com',
@@ -192,19 +192,19 @@ STATICFILES_DIRS = [
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
 
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = "smtp.gmail.com"
 EMAIL_HOST_USER = "rnradon17@gmail.com"
 EMAIL_HOST_PASSWORD = "gnkbphqrqhilxctl"
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 
-# TWILIO_ACCOUNT_SID = 'AC17c5c823570dc4c8e5637d742dfd9e0d'
-# TWILIO_AUTH_TOKEN = 'e8b81c5f8c2378223b084d853efebbde'
+TWILIO_ACCOUNT_SID = 'AC17c5c823570dc4c8e5637d742dfd9e0d'
+TWILIO_AUTH_TOKEN = 'e8b81c5f8c2378223b084d853efebbde'
 
-# SENDSMS_BACKEND = 'myapp.mysmsbackend.SmsBackend'
+SENDSMS_BACKEND = 'myapp.mysmsbackend.SmsBackend'
 
 
 
-# MSG91_AUTHKEY = '154618AwWLYscrj593050fe'
-# MSG91_ROUTE = '4'
+MSG91_AUTHKEY = '154618AwWLYscrj593050fe'
+MSG91_ROUTE = '4'

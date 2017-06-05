@@ -7,7 +7,7 @@ from rest_framework import status, generics
 from rest_framework.decorators import api_view
 
 from .models import Student, Bus, User
-from .serializers import StudentSerializer, BusSerializer, EmailSerializer, RegisterSerializer
+from .serializers import StudentSerializer, BusSerializer, RegisterSerializer#, PasswordChangeSerializer, EmailSerializer
 
 from django.http import HttpResponse
 
@@ -20,6 +20,23 @@ from django.conf import settings
 
 from django.shortcuts import render
 from .forms import RegisterForm
+
+from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
+
+from django.utils.encoding import force_bytes
+
+from django.contrib.auth.tokens import default_token_generator
+
+import requests
+
+from twilio.rest import Client
+from django.conf import settings
+
+from rest_framework.generics import GenericAPIView, RetrieveUpdateAPIView
+
+from django.shortcuts import render_to_response, get_object_or_404
+
+from django.template import Context, RequestContext
 
 #biometric-app/scanapp/
 def index(request):
@@ -221,37 +238,37 @@ def bus_detail(request, bus_pk):
 
 
 #to post an email
-# @api_view(['POST'])
-# def email(request, admission_number, message):
+@api_view(['GET'])
+def email(request, admission_number, message):
 
 
-# 	try:
-# 		student = Student.objects.filter(admission_number=admission_number)
+	try:
+		student = Student.objects.filter(admission_number=admission_number)
 
-# 	except Student.DoesNotExist:
-# 		return Response(status=status.HTTP_404_NOT_FOUND)
+	except Student.DoesNotExist:
+		return Response(status=status.HTTP_404_NOT_FOUND)
 
 
-# 	if request.method == 'POST':
+	if request.method == 'GET':
 		
-# 		message = retrieve_message(message)
+		# message = retrieve_message(message)
     	
-# 		subject = "Student Admission Number " + str(student[0].admission_number) + " " + student[0].student_name + " Suggestion"
-# 		from_email = settings.EMAIL_HOST_USER
-# 		to_email = [from_email, 'rishabhnarangcool@gmail.com']
-# 		contact_message = message
+		subject = "Student Admission Number " + str(student[0].admission_number) + " " + student[0].student_name + " Suggestion"
+		from_email = settings.EMAIL_HOST_USER
+		to_email = student[0].email_id
+		contact_message = message
 
-# 		send_mail(subject, 
-# 			contact_message,
-# 			from_email,
-# 			to_email,
-# 			fail_silently = False
-# 			)
-# 		return Response(status=status.HTTP_201_CREATED)
+		send_mail(subject, 
+			contact_message,
+			from_email,
+			to_email,
+			fail_silently = False
+			)
+		return Response(status=status.HTTP_201_CREATED)
 
-# 	else:
-# 			return Response(
-#                 serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+	else:
+			return Response(
+                serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 
@@ -299,3 +316,139 @@ def register_bus(request):
     return render(request, 'scanapp/register_bus.html', context)
 
 
+
+
+def reset_password(request, username):
+
+	associated_user = User.objects.filter(username=username) 
+	# print(associated_user[0].username)
+
+	if associated_user.exists():
+		print("True")
+		user = User.objects.filter(username=associated_user[0].username)
+		student = Student.objects.filter(admission_number=associated_user[0].username)
+		parent_number = student[0].phone_number
+		print(parent_number)
+		print(user)
+		print(user[0])
+		c = {
+		'uid': urlsafe_base64_encode(force_bytes(user[0].pk)),
+		'user': user,
+		'token': default_token_generator.make_token(user[0]),
+		'protocol': 'http',
+		}
+
+		print(c['token'])
+		print(c['uid'])
+		parent_number_str = str(parent_number)
+		parent_number_str = parent_number_str.replace("+91","")
+		# urls = 'http://127.0.0.1:8000/scanapp/send/' + parent_number_str + '/token/' + c['token'] + '/uid/' + c['uid']
+		message_text = 'Click or copy paste the below link to change the password'
+		message_url = 'http://127.0.0.1:8000/scanapp/password/change?token=' + c['token'] + '&uid=' + str(c['uid']) + '/auth'
+		message_regards1 = 'Regards,'
+		message_regards2 = 'Team Manav Rachna'
+		message = message_text + '\n\n\n' + message_url + '\n\n\n' + message_regards1 + '\n' + message_regards2
+		# url = 'http://127.0.0.1:8000/scanapp/email/' + username + '/message/' + message_text
+		# r = requests.get(url, params=request.GET)
+		# print(r)
+
+
+
+
+		subject = "Student Admission Number " + str(student[0].admission_number) + " " + student[0].student_name + " Password Change!"
+		from_email = settings.EMAIL_HOST_USER
+		to_email = [student[0].email_id]
+		contact_message = message
+
+		send_mail(subject, 
+			contact_message,
+			from_email,
+			to_email,
+			fail_silently = False
+			)
+
+		return render(request, 'scanapp/email_sent.html')
+
+	else:
+		return render(request, 'scanapp/user_invalid.html')
+
+
+
+
+def awesome_method(request, phone_number, message):
+	phone_number = "+91" + str(phone_number)
+	message = message
+	from_ = '+17866296415'
+	to = phone_number;
+	client = Client(
+    settings.TWILIO_ACCOUNT_SID, settings.TWILIO_AUTH_TOKEN)
+	response = client.messages.create(
+	    body=message, to=to, from_=from_)
+
+
+
+
+
+
+def callback(request):
+	token = request.GET.get('token')
+	uid = request.GET.get('uid').replace("/auth","").replace("b'","").replace("'","")
+
+	context = {
+		'token' : token,
+		'uid' : uid,
+	}
+
+	return render(request, 'scanapp/callback.html', context)
+
+
+
+
+
+
+# class PasswordChangeView(GenericAPIView):
+#     """
+#     Calls Django Auth SetPasswordForm save method.
+
+#     Accepts the following POST parameters: new_password1, new_password2
+#     Returns the success/fail message.
+#     """
+#     serializer_class = PasswordChangeSerializer
+#     # permission_classes = (IsAuthenticated,)
+
+#     # @sensitive_post_parameters_m
+#     def dispatch(self, *args, **kwargs):
+#         return super(PasswordChangeView, self).dispatch(*args, **kwargs)
+
+#     def post(self, request):
+#         serializer = self.get_serializer(data=request.data)
+#         serializer.is_valid(raise_exception=True)
+#         serializer.save()
+#         return Response({"detail": _("New password has been saved.")})
+
+
+
+
+
+# MSG91_AUTHKEY = '154618AwWLYscrj593050fe'
+# MSG91_ROUTE = '4'
+
+# # class Msg91SmsBackend(BaseSmsBackend):
+
+#     def send_messages(self, messages):
+#         for message in messages:
+#             for to in message.to:
+#                 values = {
+#                           'authkey' : MSG91_AUTHKEY,
+#                           'mobiles' : to,
+#                           'message' : message.body,
+#                           'sender' : message.from_phone,
+#                           'route' : MSG91_ROUTE
+#                           }
+#                 print(values)
+#                 url = "https://control.msg91.com/api/sendhttp.php" # API URL
+#                 postdata = urllib.urlencode(values) # URL encoding the data here.
+#                 req = urllib2.Request(url, postdata)
+#                 response = urllib2.urlopen(req)
+#                 output = response.read() # Get Response
+#                 print(response)
