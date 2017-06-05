@@ -29,8 +29,8 @@ from django.contrib.auth.tokens import default_token_generator
 
 import requests
 
-from twilio.rest import Client
-from django.conf import settings
+# from twilio.rest import Client
+# from django.conf import settings
 
 from rest_framework.generics import GenericAPIView, RetrieveUpdateAPIView
 
