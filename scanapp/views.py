@@ -194,21 +194,76 @@ def bus_list(request):
 
 #biometric-app/scanapp/bus/bus_id
 
+# @method_decorator(csrf_exempt)
+# @api_view(['GET', 'PUT', 'DELETE', 'POST'])
+
+# def bus_detail(request, bus_pk):
+
+# 	"""
+#     Get, udpate, or delete a specific query from the table
+#     """
+
+# 	# try:
+# 	# 	bus = Bus.objects.filter(id=bus_pk)
+# 	# except Bus.DoesNotExist:
+# 	# 	return Response(status=status.HTTP_404_NOT_FOUND)
+
+# 	try:
+# 		bus = Bus.objects.filter(id=bus_pk)
+# 		# bus = bus.get(id=bus_pk)
+
+# 	except Bus.DoesNotExist:
+# 		return Response(status=status.HTTP_404_NOT_FOUND)
+
+# 	if request.method == 'GET':
+# 		# bus = Bus.objects.filter(id=bus_pk)
+# 		serializer = BusSerializer(bus,many=True)
+# 		return Response(serializer.data)
+
+# 	# if request.method == 'GET':
+# 	# 	serializer = BusSerializer(bus,many=True)
+# 	# 	return Response(serializer.data)
+
+# 	elif request.method == 'PUT':
+# 		serializer = BusSerializer(bus, data=request.data)
+# 		if serializer.is_valid():
+# 			serializer.save()
+# 			return Response(serializer.data)
+# 		else:
+# 			return Response(
+# 				serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+# 	elif request.method == 'POST':
+# 		serializer = BusSerializer(data=request.data)
+# 		if serializer.is_valid():
+# 			serializer.save()
+# 			return Response(serializer.data, status=status.HTTP_201_CREATED)
+# 		else:
+# 			return Response(
+#                 serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+# 	elif request.method == 'DELETE':
+# 		bus.delete()
+# 		return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+
 @method_decorator(csrf_exempt)
 @api_view(['GET', 'PUT', 'DELETE', 'POST'])
 
-def bus_detail(request, bus_pk):
+def bus_detail(request, bus_number):
 
 	"""
     Get, udpate, or delete a specific query from the table
     """
 
 	try:
-		bus = Bus.objects.filter(id=bus_pk)
+		bus = Bus.objects.get(bus_number=bus_number)
 	except Bus.DoesNotExist:
 		return Response(status=status.HTTP_404_NOT_FOUND)
 
 	if request.method == 'GET':
+		bus = Bus.objects.filter(bus_number=bus_number)
 		serializer = BusSerializer(bus,many=True)
 		return Response(serializer.data)
 
@@ -233,6 +288,7 @@ def bus_detail(request, bus_pk):
 	elif request.method == 'DELETE':
 		bus.delete()
 		return Response(status=status.HTTP_204_NO_CONTENT)
+
 
 
 
