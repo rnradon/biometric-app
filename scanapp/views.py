@@ -80,6 +80,8 @@ def student_detail(request, student_biometric_id, bus_pk):
     """
 
     try:
+    	# bus_num = Bus.objects.filter(bus_number=bus_number)
+    	# bus_pk = bus_num.get(bus_pk)
     	student = Student.objects.filter(bus=bus_pk)
     	student = student.get(student_biometric_id=student_biometric_id)
     	
