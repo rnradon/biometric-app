@@ -402,8 +402,8 @@ def reset_password(request, username):
 		parent_number_str = parent_number_str.replace("+91","")
 		# urls = 'http://127.0.0.1:8000/scanapp/send/' + parent_number_str + '/token/' + c['token'] + '/uid/' + c['uid']
 		message_text = 'Click or copy paste the below link to change the password'
-		# message_url = 'https://biometric-app.herokuapp.com/scanapp/password/change?token=' + c['token'] + '&uid=' + str(c['uid']) + '/auth'
-		message_url = 'http://127.0.0.1:8000/scanapp/password/change?token=' + c['token'] + '&uid=' + str(c['uid']) + '/auth'
+		message_url = 'https://biometric-app.herokuapp.com/scanapp/password/change?token=' + c['token'] + '&uid=' + str(c['uid']) + '/auth'
+		# message_url = 'http://127.0.0.1:8000/scanapp/password/change?token=' + c['token'] + '&uid=' + str(c['uid']) + '/auth'
 		message_regards1 = 'Regards,'
 		message_regards2 = 'Team Manav Rachna'
 		message = message_text + '\n\n\n' + message_url + '\n\n\n' + message_regards1 + '\n' + message_regards2
