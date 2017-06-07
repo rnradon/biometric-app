@@ -17,7 +17,7 @@ class Bus(models.Model):
 		verbose_name_plural = "buses"    
 
 	def __str__(self):
-		return self.bus_number
+		return self.bus_route_number
 
 
 class Student(models.Model):

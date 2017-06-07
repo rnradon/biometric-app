@@ -1,8 +1,3 @@
-<!-- callback.html -->
-
-<!-- token: {{ token }}<br />
-uid: {{ uid }} -->
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -24,9 +19,9 @@ uid: {{ uid }} -->
 <body>
 <div class="container"> 
 <div class="row">
-<div class="col-md-4 col-sm-0 col-xs-0"></div>
-<div class="col-md-4 col-sm-0 col-xs-0"></div><br/>
-<div class="col-md-4 col-sm-12" id = "success" style="color: white;font-size: 13px;background-color: darkslategrey;border-radius: 5px; display: none; width: 90%; text-align: center; margin-left: 5%;">
+<div class="col-md-3 col-sm-0 col-xs-0"></div>
+<div class="col-md-3 col-sm-0 col-xs-0"></div><br/>
+<div class="col-md-6 col-sm-12" id = "success" style="color: white;font-size: 13px;background-color: darkslategrey;border-radius: 5px; display: none; width: 90%; text-align: center; margin-left: 5%;">
   * Password Changed Successfully ! *
 </div> 
 </div>
@@ -52,10 +47,10 @@ uid: {{ uid }} -->
     <form id = "myForm" action="/rest-auth/password/reset/confirm/" method="post" target="dummyframe">
    
     <fieldset>
-      <input placeholder="New Password" type="tel" tabindex="1" required name="new_password1">
+      <input placeholder="New Password" type="password" tabindex="1" required name="new_password1">
     </fieldset>
     <fieldset>
-      <input placeholder="Re Enter New Password" type="tel" tabindex="2" required name="new_password2">
+      <input placeholder="Re Enter New Password" type="password" tabindex="2" required name="new_password2">
     </fieldset>
 
     <input type="hidden" value = "{{ token }}" required name="token">

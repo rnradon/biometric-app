@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- <title>{% block title %}Viberr{% endblock %}</title> -->
     {% load staticfiles %}
     <!-- <link rel="shortcut icon" type="image/png" href="{%  static 'favicon.ico' %}"/> -->
@@ -16,28 +17,28 @@
     <script src="{% static 'scanapp/js/plugin.js' %}"></script>
 </head>
 <body>
-<div class="container-flud"> 
+<div class="container"> 
 <div class="row">
-<div class="col-md-3"></div>
-<div class="col-md-4"></div>
-<div class="col-md-4" id = "success" style="color: white;font-size: 13px;background-color: darkslategrey;border-radius: 5px; display: none;">
+<div class="col-md-3 col-sm-0 col-xs-0"></div>
+<div class="col-md-3 col-sm-0 col-xs-0"></div><br/>
+<div class="col-md-6 col-sm-12" id = "success" style="color: white;font-size: 13px;background-color: darkslategrey;border-radius: 5px; display: none; width: 90%; text-align: center; margin-left: 5%;">
   Credentials Submitted Successfully. Press the back button for more entries!
 </div> 
 </div>
 </div>
-<div class="container-flud"> 
+<div class="container"> 
 <div class="row">
-<div class="col-md-3"></div>
-<div class="col-md-4"></div>
-<div class="col-md-4" id = "error" style="color: white;font-size: 13px;background-color: darkslategrey;border-radius: 5px; display: none;">
+<div class="col-md-4 col-sm-0 col-xs-0"></div>
+<div class="col-md-4 col-sm-0 col-xs-0"></div><br/>
+<div class="col-md-6 col-sm-12" id = "error" style="color: white;font-size: 13px;background-color: darkslategrey;border-radius: 5px; display: none; width: 90%; text-align: center; margin-left: 5%;">
   User Already Exists / Enter the Correct Details !
 </div> 
 </div>
 </div>
-<div class="container"> 
+<div class="container" id="main_form" >  
 
 <iframe width="0" height="0" border="0" name="dummyframe" id="dummyframe" style="display: none;"></iframe>
-  <div id="contact" >
+  <div id="contact" style="margin-top: 30%; margin-bottom: 0%">
     <h3>Student Account</h3>
     <h4>Enter the aforementioned details</h4>
     <a href="/admin"><button name="submit" type="submit" id="contact-submit" style="background-color: #4c96af; margin-bottom: 3%">Back</button></a>

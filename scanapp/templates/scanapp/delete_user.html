@@ -27,7 +27,7 @@ uid: {{ uid }} -->
 <div class="col-md-4 col-sm-0 col-xs-0"></div>
 <div class="col-md-4 col-sm-0 col-xs-0"></div><br/>
 <div class="col-md-4 col-sm-12" id = "success" style="color: white;font-size: 13px;background-color: darkslategrey;border-radius: 5px; display: none; width: 90%; text-align: center; margin-left: 5%;">
-  * Password Changed Successfully ! *
+  * Credentials Deleted Successfully ! Press the back button to return*
 </div> 
 </div>
 </div>
@@ -36,7 +36,7 @@ uid: {{ uid }} -->
 <div class="col-md-3 col-sm-0 col-xs-0"></div>
 <div class="col-md-3 col-sm-0 col-xs-0"></div><br/>
 <div class="col-md-6 col-sm-12 col-xs-12" id = "error" style="color: white;font-size: 13px;background-color: darkslategrey;border-radius: 5px;display: none ; width: 90%; text-align: center; margin-left: 5%;">
-  * Invalid Password ! / Authorization Token Timed Out ! *
+  * Invalid Admission Number/ Bus Route Number *
 </div> 
 </div>
 </div>
@@ -45,14 +45,14 @@ uid: {{ uid }} -->
 
 <iframe width="0" height="0" border="0" name="dummyframe" id="dummyframe" style="display: none;"></iframe>
   <div id="contact" style="margin-top: 30%; margin-bottom: 0%">
-    <h3>Delete Bus User</h3>
-    <h4>Enter the bus route number</h4>
-    <h4>To remove it's sign in credentials</h4>
-    <!-- <a href="/admin" class = "back"><button name="submit" type="submit" id="contact-submit" class = "back" style="background-color: #4c96af; margin-bottom: 3%; display: none;">Back</button></a> -->
-    <form id = "myForm" action="/rest-auth/password/reset/confirm/" method="post" target="dummyframe">
+    <h3>Delete User</h3>
+    <h4>IF STUDENT :- Username - Admission Number<br/>IF BUS :- Username - Bus Route Number</h4>
+    <h4>To remove his sign-in credentials</h4>
+    <a href="/admin" class = "back"><button name="submit" type="submit" id="contact-submit" class = "back" style="background-color: #4c96af; margin-bottom: 3%;">Back</button></a>
+    <form id = "myForm" action="/scanapp/delete_user_model" method="post" target="dummyframe">
    
     <fieldset>
-      <input placeholder="Bur Route Number" type="number" tabindex="1" required name="username">
+      <input placeholder="Username" type="number" tabindex="1" required name="username" style="width: 100%">
     </fieldset>
     
       <button name="submit" type="submit" id="contact-submit" data-submit="...Sending" onclick="showBack();">Delete</button>
@@ -63,7 +63,7 @@ uid: {{ uid }} -->
 
       $('#myForm')
       .ajaxForm({
-        url : '/rest-auth/password/reset/confirm/', // or whatever
+        url : '/scanapp/delete_user_model', // or whatever
         dataType : 'json',
         success : function (response) {
             document.getElementById("success").style.display = "block";

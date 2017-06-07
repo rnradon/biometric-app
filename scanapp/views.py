@@ -7,7 +7,7 @@ from rest_framework import status, generics
 from rest_framework.decorators import api_view
 
 from .models import Student, Bus, User
-from .serializers import StudentSerializer, BusSerializer, RegisterSerializer#, PasswordChangeSerializer, EmailSerializer
+from .serializers import StudentSerializer, BusSerializer, RegisterSerializer, UserSerializer#, PasswordChangeSerializer, EmailSerializer
 
 from django.http import HttpResponse
 
@@ -19,7 +19,7 @@ from django.core.mail import send_mail
 from django.conf import settings
 
 from django.shortcuts import render
-from .forms import RegisterForm
+from .forms import RegisterForm,DeleteUserForm
 
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 
@@ -492,16 +492,46 @@ def callback(request):
 
 
 @method_decorator(csrf_exempt)
-def delete_user_student(request):
+def delete_user(request):
     form = DeleteUserForm(request.POST or None)
     if form.is_valid():
         reg = form.save()
         # album.save()
-        return render(request, 'scanapp/delete_user_student.html')
+        return render(request, 'scanapp/delete_user.html')
     context = {
         "form": form,
     }
-    return render(request, 'scanapp/delete_user_student.html', context)
+    return render(request, 'scanapp/delete_user.html', context)
+
+
+
+
+@method_decorator(csrf_exempt)
+@api_view(['GET', 'POST'])
+
+def delete_user_model(request):
+
+
+    if request.method == 'POST':
+        serializer = UserSerializer(data=request.data)
+        if not serializer.is_valid():
+        	print("-------------------")
+        	print(serializer['username'].value)
+        	username=serializer['username'].value
+        	User.objects.filter(username=username).delete()
+        	return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+        else:
+        	return Response(
+                serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+        # serializer = self.get_serializer(data=request.data)
+        # serializer.is_valid(raise_exception=True)
+        # serializer.save()
+        # return Response({"detail": _("New password has been saved.")})
+
+
+
 
 
 # class PasswordChangeView(GenericAPIView):
