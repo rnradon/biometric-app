@@ -47,10 +47,10 @@
     <form id = "myForm" action="/rest-auth/password/reset/confirm/" method="post" target="dummyframe">
    
     <fieldset>
-      <input placeholder="New Password" type="password" tabindex="1" required name="new_password1">
+      <input placeholder="New Password" type="password" tabindex="1" required name="new_password1" style="width: 100%;">
     </fieldset>
     <fieldset>
-      <input placeholder="Re Enter New Password" type="password" tabindex="2" required name="new_password2">
+      <input placeholder="Re Enter New Password" type="password" tabindex="2" required name="new_password2" style="width: 100%;">
     </fieldset>
 
     <input type="hidden" value = "{{ token }}" required name="token">
