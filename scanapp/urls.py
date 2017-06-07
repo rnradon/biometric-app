@@ -10,7 +10,8 @@ urlpatterns = [
     url(r'^student_all/$', views.student_list, name='student_list'),
     url(r'^bus_route_number/(?P<bus_route_number>[0-9]+)/student_biometric_id/(?P<student_biometric_id>[0-9]+)$', views.student_detail, name='student_detail'),
     url(r'^bus_all/$', views.bus_list, name='bus_list'),
-    url(r'^bus_route_number/(?P<bus_route_number>[0-9]+)$', views.bus_detail, name='bus_detail'),
+    url(r'^bus_route_number/(?P<bus_route_number>[0-9]+)$', views.bus_app_detail, name='bus_app_detail'),
+    url(r'^bus_primary_key/(?P<bus_id>[0-9]+)$', views.student_bus_detail, name='student_bus_detail'),
     url(r'^parent_student_admission_number/(?P<admission_number>[0-9]+)$', views.parent_view, name='parent_view'),
     
 

@@ -169,6 +169,28 @@ def parent_view(request, admission_number):
 
 
 
+
+@method_decorator(csrf_exempt)
+@api_view(['GET'])
+
+def student_bus_detail(request, bus_id):
+
+	"""
+    Get, udpate, or delete a specific query from the table
+    """
+
+	try:
+		bus = Bus.objects.filter(id=bus_id)
+	except Bus.DoesNotExist:
+		return Response(status=status.HTTP_404_NOT_FOUND)
+
+	if request.method == 'GET':
+		
+		serializer = BusSerializer(bus,many=True)
+		return Response(serializer.data)
+
+
+
 #biometric-app/scanapp/bus_all
 
 @method_decorator(csrf_exempt)
@@ -253,7 +275,7 @@ def bus_list(request):
 @method_decorator(csrf_exempt)
 @api_view(['GET', 'PUT', 'DELETE', 'POST'])
 
-def bus_detail(request, bus_route_number):
+def bus_app_detail(request, bus_route_number):
 
 	"""
     Get, udpate, or delete a specific query from the table
@@ -290,6 +312,10 @@ def bus_detail(request, bus_route_number):
 	elif request.method == 'DELETE':
 		bus.delete()
 		return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+
+
 
 
 
