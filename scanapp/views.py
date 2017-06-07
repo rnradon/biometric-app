@@ -74,14 +74,14 @@ def student_list(request):
 @method_decorator(csrf_exempt)
 @api_view(['GET', 'PUT', 'DELETE', 'POST'])
 
-def student_detail(request, student_biometric_id, bus_pk):
+def student_detail(request, student_biometric_id, bus_route_number):
     """
     Get, udpate, or delete a specific query from the table
     """
 
     try:
-    	# bus_num = Bus.objects.filter(bus_number=bus_number)
-    	# bus_pk = bus_num.get(bus_pk)
+    	bus_num = Bus.objects.filter(bus_route_number=bus_route_number)
+    	bus_pk = bus_num[0].id
     	student = Student.objects.filter(bus=bus_pk)
     	student = student.get(student_biometric_id=student_biometric_id)
     	
@@ -253,19 +253,19 @@ def bus_list(request):
 @method_decorator(csrf_exempt)
 @api_view(['GET', 'PUT', 'DELETE', 'POST'])
 
-def bus_detail(request, bus_number):
+def bus_detail(request, bus_route_number):
 
 	"""
     Get, udpate, or delete a specific query from the table
     """
 
 	try:
-		bus = Bus.objects.get(bus_number=bus_number)
+		bus = Bus.objects.get(bus_route_number=bus_route_number)
 	except Bus.DoesNotExist:
 		return Response(status=status.HTTP_404_NOT_FOUND)
 
 	if request.method == 'GET':
-		bus = Bus.objects.filter(bus_number=bus_number)
+		bus = Bus.objects.filter(bus_route_number=bus_route_number)
 		serializer = BusSerializer(bus,many=True)
 		return Response(serializer.data)
 

@@ -10,7 +10,7 @@ class Bus(models.Model):
 	driver_name = models.CharField(max_length=100)
 	conductor_name = models.CharField(max_length=100)
 	number_plate = models.CharField(max_length=100)
-	bus_number = models.CharField(max_length=100)
+	bus_route_number = models.CharField(max_length=100)
 	teacher_incharge = models.CharField(max_length=100)
 
 	class Meta:
