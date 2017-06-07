@@ -7,6 +7,7 @@ uid: {{ uid }} -->
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- <title>{% block title %}Viberr{% endblock %}</title> -->
     {% load staticfiles %}
     <!-- <link rel="shortcut icon" type="image/png" href="{%  static 'favicon.ico' %}"/> -->
@@ -21,31 +22,32 @@ uid: {{ uid }} -->
     <script src="{% static 'scanapp/js/plugin.js' %}"></script>
 </head>
 <body>
-<div class="container-flud"> 
+<div class="container"> 
 <div class="row">
-<div class="col-md-3"></div>
-<div class="col-md-4"></div>
-<div class="col-md-4" id = "success" style="color: white;font-size: 13px;background-color: darkslategrey;border-radius: 5px; display: none;">
-  Password Changed Successfully !
+<div class="col-md-4 col-sm-0 col-xs-0"></div>
+<div class="col-md-4 col-sm-0 col-xs-0"></div><br/>
+<div class="col-md-4 col-sm-12" id = "success" style="color: white;font-size: 13px;background-color: darkslategrey;border-radius: 5px; display: none; width: 90%; text-align: center; margin-left: 5%;">
+  * Password Changed Successfully ! *
 </div> 
 </div>
 </div>
-<div class="container-flud"> 
+<div class="container"> 
 <div class="row">
-<div class="col-md-3"></div>
-<div class="col-md-4"></div>
-<div class="col-md-4" id = "error" style="color: white;font-size: 13px;background-color: darkslategrey;border-radius: 5px; display: none;">
-  InValid Password ! / Authorization Timed Out !
+<div class="col-md-3 col-sm-0 col-xs-0"></div>
+<div class="col-md-3 col-sm-0 col-xs-0"></div><br/>
+<div class="col-md-6 col-sm-12 col-xs-12" id = "error" style="color: white;font-size: 13px;background-color: darkslategrey;border-radius: 5px;display: none ; width: 90%; text-align: center; margin-left: 5%;">
+  * Invalid Password ! / Authorization Token Timed Out ! *
 </div> 
 </div>
 </div>
 
-<div class="container"> 
+<div class="container" id="main_form"> 
 
 <iframe width="0" height="0" border="0" name="dummyframe" id="dummyframe" style="display: none;"></iframe>
-  <div id="contact" >
+  <div id="contact" style="margin-top: 30%; margin-bottom: 0%">
     <h3>Password Change !</h3>
     <h4>Enter your new password</h4>
+    <h4 style="color:#af4c4c;">* Password must be atleast 8 characters long *</h4>
     <!-- <a href="/admin" class = "back"><button name="submit" type="submit" id="contact-submit" class = "back" style="background-color: #4c96af; margin-bottom: 3%; display: none;">Back</button></a> -->
     <form id = "myForm" action="/rest-auth/password/reset/confirm/" method="post" target="dummyframe">
    
