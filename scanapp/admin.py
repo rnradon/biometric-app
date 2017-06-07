@@ -15,7 +15,7 @@ from allauth.account.models import EmailAddress
 admin.site.disable_action('delete_selected')
 
 class StudentAdmin(admin.ModelAdmin):
-	exclude = ('start_trip', 'end_trip', 'latitude', 'longitude')
+	# exclude = ('start_trip', 'end_trip', 'latitude', 'longitude')
 	search_fields = ('student_name', 'admission_number' )
 	def response_add(self, request, obj, post_url_continue=None):
 		"""This makes the response after adding to redirect to user add admin"""

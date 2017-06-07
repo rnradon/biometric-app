@@ -2,8 +2,24 @@ from django.db import models
 from django.core.validators import MinValueValidator, MaxValueValidator
 from phonenumber_field.modelfields import PhoneNumberField
 from django.contrib.auth.models import Permission, User
+from django import forms
+from django.utils.translation import gettext as _
 
 # Create your models here.
+
+class CommaSeparatedFloatField(models.CharField):
+    def formfield(self, **kwargs):
+        defaults = {
+            'form_class': forms.RegexField,
+            'regex': '^[\d+\.\d,]+$',
+            # 'regex': '^[\d,]+$',
+            'max_length': self.max_length,
+            'error_messages': {
+                'invalid': _(u'Enter only digits separated by commas.'),
+            }
+        }
+        defaults.update(kwargs)
+        return super(CommaSeparatedFloatField, self).formfield(**defaults)
 
 
 class Bus(models.Model):
@@ -12,6 +28,8 @@ class Bus(models.Model):
 	number_plate = models.CharField(max_length=100)
 	bus_route_number = models.CharField(max_length=100)
 	teacher_incharge = models.CharField(max_length=100)
+	# latitude = CommaSeparatedFloatField(max_length=500,null=True)
+	# longitude = CommaSeparatedFloatField(max_length=500,null=True)
 
 	class Meta:
 		verbose_name_plural = "buses"    
@@ -31,10 +49,8 @@ class Student(models.Model):
 	phone_number = PhoneNumberField()
 	email_id = models.EmailField()
 	student_bus_stop = models.CharField(max_length=200)
-	latitude = models.DecimalField(max_digits=10, decimal_places=8, null = True)
-	longitude = models.DecimalField(max_digits=11, decimal_places=8, null = True)
-	start_trip = models.DateTimeField(auto_now_add=False, null = True)
-	end_trip = models.DateTimeField(auto_now_add=False, null = True)
+	# start_trip = models.DateTimeField(auto_now_add=False, null = True)
+	# end_trip = models.DateTimeField(auto_now_add=False, null = True)
 	student_biometric_id = models.PositiveIntegerField(validators = [MinValueValidator(1), MaxValueValidator(255)])
 
 
