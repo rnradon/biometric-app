@@ -194,8 +194,8 @@ STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = "smtp.gmail.com"
-EMAIL_HOST_USER = "rnradon17@gmail.com"
-EMAIL_HOST_PASSWORD = "gnkbphqrqhilxctl"
+EMAIL_HOST_USER = "appbiometric@gmail.com"
+EMAIL_HOST_PASSWORD = "dbjoorxevooigdoc"
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 
