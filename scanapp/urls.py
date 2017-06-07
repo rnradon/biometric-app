@@ -20,6 +20,7 @@ urlpatterns = [
     # url(r'^sms/$', views.Msg91SmsBackend, name = 'awesome_method'),
     url(r'^email/(?P<admission_number>[0-9]+)/message/(?P<message>[\w\-]+)$', views.email, name='email'),
     url(r'^password/change$', views.callback, name='callback'),
+    url(r'^delete_user_student$', views.delete_user_student, name='delete_user_student'),
     # url(r'^send/(?P<phone_number>[0-9]+)/message/(?P<message>[\w\-]+)$', views.awesome_method, name='email'),
 
 ]

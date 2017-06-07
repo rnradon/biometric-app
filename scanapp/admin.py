@@ -18,11 +18,12 @@ class StudentAdmin(admin.ModelAdmin):
 	exclude = ('start_trip', 'end_trip', 'latitude', 'longitude')
 	def response_add(self, request, obj, post_url_continue=None):
 		"""This makes the response after adding to redirect to user add admin"""
-		return HttpResponseRedirect("/admin/auth/user/add/")
+		# return HttpResponseRedirect("/admin/auth/user/add/")
+		return HttpResponseRedirect("/scanapp/sign_up_student")
 
 	def response_delete(self, request, obj, post_url_continue=None):
 		"""This makes the response after deleting to redirect to user delete admin"""
-		return HttpResponseRedirect("/admin/auth/user/")
+		return HttpResponseRedirect("/scanapp/delete_user_student")
 
 
 # class ModelAdmin(admin.ModelAdmin):

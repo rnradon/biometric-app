@@ -10,3 +10,10 @@ class RegisterForm(forms.ModelForm):
         model = User
         fields = ['username', 'password']
 
+
+class DeleteUserForm(forms.ModelForm):
+
+    class Meta:
+        model = User
+        fields = ['username']
+

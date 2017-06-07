@@ -491,6 +491,19 @@ def callback(request):
 
 
 
+@method_decorator(csrf_exempt)
+def delete_user_student(request):
+    form = DeleteUserForm(request.POST or None)
+    if form.is_valid():
+        reg = form.save()
+        # album.save()
+        return render(request, 'scanapp/delete_user_student.html')
+    context = {
+        "form": form,
+    }
+    return render(request, 'scanapp/delete_user_student.html', context)
+
+
 # class PasswordChangeView(GenericAPIView):
 #     """
 #     Calls Django Auth SetPasswordForm save method.
