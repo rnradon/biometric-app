@@ -47,7 +47,7 @@ class BusAdmin(admin.ModelAdmin):
 admin.site.register(Student, StudentAdmin)
 admin.site.register(Bus, BusAdmin)
 
-# admin.site.unregister(User)
+admin.site.unregister(User)
 admin.site.unregister(Group)
 admin.site.unregister(Site)
 admin.site.unregister(EmailAddress)
