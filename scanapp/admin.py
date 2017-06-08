@@ -10,6 +10,7 @@ from django.contrib.auth.models import Group
 from rest_framework.authtoken.models import Token
 from allauth.account.models import EmailAddress
 
+# from django.utils.translation import ugettext_lazy
 # Register your models here.
 
 admin.site.disable_action('delete_selected')
@@ -43,6 +44,13 @@ class BusAdmin(admin.ModelAdmin):
 		return HttpResponseRedirect("/scanapp/delete_user")
 
 
+
+# class MyAdminSite(AdminSite):
+# 	site_title = ugettext_lazy('BioMetric App ADMIN')
+
+
+
+# admin_site = MyAdminSite()
 
 admin.site.register(Student, StudentAdmin)
 admin.site.register(Bus, BusAdmin)
