@@ -54,8 +54,15 @@ class Student(models.Model):
 	student_biometric_id = models.PositiveIntegerField(validators = [MinValueValidator(1), MaxValueValidator(255)])
 
 
-	def Meta(self):
-		unique_together = ("student_biometric_id", "bus")
+	class Meta:
+		unique_together = (("student_biometric_id", "bus"),)
+
+	# def clean(self):
+	# 	try:
+	# 		self.admission_number.get()
+	# 	except Student.DoesNotExist:
+	# 		print("yo")
+
 
 	def __str__(self):
 		return str(self.admission_number) + " - " + self.student_name
