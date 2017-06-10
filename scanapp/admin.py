@@ -33,7 +33,7 @@ class StudentAdmin(admin.ModelAdmin):
 # class ModelAdmin(admin.ModelAdmin):
 
 class BusAdmin(admin.ModelAdmin):
-	# exclude = ('start_trip', 'end_trip', 'latitude', 'longitude')
+	exclude = ('latitude', 'longitude')
 	search_fields = ('bus_route_number',)
 	def response_add(self, request, obj, post_url_continue=None):
 		"""This makes the response after adding to redirect to signup form"""

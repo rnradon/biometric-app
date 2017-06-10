@@ -28,8 +28,8 @@ class Bus(models.Model):
 	number_plate = models.CharField(max_length=100)
 	bus_route_number = models.CharField(max_length=100)
 	teacher_incharge = models.CharField(max_length=100)
-	# latitude = CommaSeparatedFloatField(max_length=500,null=True)
-	# longitude = CommaSeparatedFloatField(max_length=500,null=True)
+	latitude = CommaSeparatedFloatField(max_length=500,null=True)
+	longitude = CommaSeparatedFloatField(max_length=500,null=True)
 
 	class Meta:
 		verbose_name_plural = "buses"    
