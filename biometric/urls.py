@@ -22,6 +22,8 @@ from scanapp import views
 from django.conf import settings
 from django.conf.urls.static import static
 
+from django.views.generic.base import RedirectView
+
 
 urlpatterns = [
     
@@ -33,7 +35,9 @@ urlpatterns = [
     url(r'^api-auth/', include('rest_framework.urls',namespace='rest_framework')),
     url(r'^reset-pass/(?P<username>[0-9]+)', views.reset_password),
     url(r'^scanapp/', include('scanapp.urls')),
+    url(r'^emergency/', include('emergencyapp.urls')),
     url(r'^', include('django.contrib.auth.urls')),
+    url(r'^favicon\.ico$', RedirectView.as_view(url=settings.MEDIA_URL + 'favicon.ico')),
 
 ]
 

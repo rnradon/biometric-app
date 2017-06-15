@@ -66,3 +66,5 @@ class Student(models.Model):
 
 	def __str__(self):
 		return str(self.admission_number) + " - " + self.student_name
+
+

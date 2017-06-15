@@ -293,7 +293,10 @@ def bus_app_detail(request, bus_route_number):
 
 	elif request.method == 'PUT':
 		serializer = BusSerializer(bus, data=request.data)
+
 		if serializer.is_valid():
+			# print(serializer.data)
+			serializer.append(serializer.data)
 			serializer.save()
 			return Response(serializer.data)
 		else:

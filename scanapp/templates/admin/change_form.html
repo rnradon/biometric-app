@@ -1,0 +1,11 @@
+{% extends "admin/change_form.html" %}
+{% load staticfiles %} 
+
+{% block branding %}
+
+<a href="{% url 'admin:index' %}" class="django-admin-logo">
+    <!-- Django Administration -->
+    <img src="{% static "images/branding/logo.png" %}" alt="{{ site_header|default:_('Django Admin') }}" style="height: 40px;">
+</a>
+
+{% endblock branding %}

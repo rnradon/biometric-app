@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'rest_auth.registration',
     'phonenumber_field',
     'scanapp',
+    'emergencyapp',
 ]
 
 SITE_ID = 1
@@ -199,12 +200,12 @@ EMAIL_HOST_PASSWORD = "dbjoorxevooigdoc"
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 
-TWILIO_ACCOUNT_SID = 'AC17c5c823570dc4c8e5637d742dfd9e0d'
-TWILIO_AUTH_TOKEN = 'e8b81c5f8c2378223b084d853efebbde'
+# TWILIO_ACCOUNT_SID = 'AC17c5c823570dc4c8e5637d742dfd9e0d'
+# TWILIO_AUTH_TOKEN = 'e8b81c5f8c2378223b084d853efebbde'
 
-SENDSMS_BACKEND = 'myapp.mysmsbackend.SmsBackend'
+# SENDSMS_BACKEND = 'myapp.mysmsbackend.SmsBackend'
 
 
 
-MSG91_AUTHKEY = '154618AwWLYscrj593050fe'
-MSG91_ROUTE = '4'
+# MSG91_AUTHKEY = '154618AwWLYscrj593050fe'
+# MSG91_ROUTE = '4'
