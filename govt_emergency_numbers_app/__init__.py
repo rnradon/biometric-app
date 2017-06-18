@@ -1,0 +1,1 @@
+default_app_config = 'govt_emergency_numbers_app.apps.GovtEmergencyNumbersConfig'

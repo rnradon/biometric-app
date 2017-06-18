@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     'phonenumber_field',
     'scanapp',
     'emergencyapp',
+    'govt_emergency_numbers_app',
 ]
 
 SITE_ID = 1

@@ -28,6 +28,8 @@ class Bus(models.Model):
 	number_plate = models.CharField(max_length=100)
 	bus_route_number = models.CharField(max_length=100)
 	teacher_incharge = models.CharField(max_length=100)
+	teacher_incharge_phone_number = PhoneNumberField()
+	driver_phone_number = PhoneNumberField()
 	latitude = CommaSeparatedFloatField(max_length=500,null=True)
 	longitude = CommaSeparatedFloatField(max_length=500,null=True)
 
