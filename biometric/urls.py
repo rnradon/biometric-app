@@ -36,6 +36,7 @@ urlpatterns = [
     url(r'^reset-pass/(?P<username>[0-9]+)', views.reset_password),
     url(r'^scanapp/', include('scanapp.urls')),
     url(r'^emergency/', include('emergencyapp.urls')),
+    url(r'^govt-emergency-contact/', include('govt_emergency_numbers_app.urls')),
     url(r'^', include('django.contrib.auth.urls')),
     url(r'^favicon\.ico$', RedirectView.as_view(url=settings.MEDIA_URL + 'favicon.ico')),
 

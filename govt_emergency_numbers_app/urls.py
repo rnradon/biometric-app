@@ -7,5 +7,5 @@ app_name = 'govt_emergency_numbers_app'
 
 urlpatterns = [
     url(r'^$', views.index, name='index'),
-    url(r'^govt_emergency_contacts/$', views.govt_emergency_contact_list, name='govt_emergency_contact_list'),
+    url(r'^contacts_list/$', views.govt_emergency_contact_list, name='govt_emergency_contact_list'),
 ]
