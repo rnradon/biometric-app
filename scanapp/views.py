@@ -296,7 +296,7 @@ def bus_app_detail(request, bus_route_number):
 
 		if serializer.is_valid():
 			# print(serializer.data)
-			serializer.append(serializer.data)
+			# serializer.append(serializer.data)
 			serializer.save()
 			return Response(serializer.data)
 		else:
