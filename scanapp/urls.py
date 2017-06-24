@@ -13,6 +13,7 @@ urlpatterns = [
     url(r'^bus_route_number/(?P<bus_route_number>[0-9]+)$', views.bus_app_detail, name='bus_app_detail'),
     url(r'^bus_primary_key/(?P<bus_id>[0-9]+)$', views.student_bus_detail, name='student_bus_detail'),
     url(r'^parent_student_admission_number/(?P<admission_number>[0-9]+)$', views.parent_view, name='parent_view'),
+    url(r'^bus_route_number/(?P<bus_route_number>[0-9]+)/student_all/$', views.bus_wise_student_list, name='bus_wise_student_list'),
     
 
     url(r'^sign_up_student/$', views.register_student, name="register_student"),

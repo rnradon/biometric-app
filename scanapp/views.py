@@ -120,6 +120,31 @@ def student_detail(request, student_biometric_id, bus_route_number):
 
 
 
+@method_decorator(csrf_exempt)
+@api_view(['GET'])
+
+def bus_wise_student_list(request, bus_route_number):
+    """
+    Get, udpate, or delete a specific query from the table
+    """
+
+    try:
+    	bus_num = Bus.objects.filter(bus_route_number=bus_route_number)
+    	bus_pk = bus_num[0].id
+    	student = Student.objects.filter(bus=bus_pk)
+    	
+    except Student.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+
+    if request.method == 'GET':
+    	student = Student.objects.filter(bus=bus_pk)
+    	serializer = StudentSerializer(student,many=True)
+    	return Response(serializer.data)
+
+
+
+
+
 #biometric-app/scanapp/parent/admission_number
 @method_decorator(csrf_exempt)
 @api_view(['GET', 'PUT', 'DELETE', 'POST'])
